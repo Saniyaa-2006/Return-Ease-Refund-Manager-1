@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Orders - Return-Ease</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'my_app/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="dashboard-page">
+    <header class="dashboard-header">
+        <div class="logo">Return-Ease</div>
+        <nav class="dashboard-nav">
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'about' %}">About</a>
+            <a href="{% url 'help' %}">Help</a>
+            <a href="{% url 'profile' %}">Profile</a>
+            <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+        </nav>
+    </header>
+
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-buttons-group">
+                <span class="sidebar-label"
+                    style="font-size: 0.75rem; text-transform: uppercase; color: #94a3b8; letter-spacing: 0.1em; margin-bottom: 0.5rem; font-weight: 600; padding-left: 1rem;">Actions</span>
+                <a href="{% url 'products' %}" class="action-link">
+                    <span style="margin-right: 12px;">🛍️</span> View Products
+                </a>
+                <a href="{% url 'view_orders' %}" class="action-link">
+                    <span style="margin-right: 12px;">📦</span> View Orders
+                </a>
+                <a href="{% url 'update_orders' %}" class="action-link active">
+                    <span style="margin-right: 12px;">🔄</span> Update
+                </a>
+                <a href="{% url 'refund_orders' %}" class="action-link">
+                    <span style="margin-right: 12px;">💰</span> Refund
+                </a>
+            </div>
+        </aside>
+
+        <main class="dashboard-main-content">
+            <section class="welcome-section">
+                <h1>Update Orders</h1>
+                <p>Select an order to update its status.</p>
+            </section>
+
+            {% if orders %}
+            <div class="orders-table-container">
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>Product ID</th>
+                            <th>Product Name</th>
+                            <th>Current Status</th>
+                            <th>Purchase Date</th>
+                            <th style="text-align: center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                        <tr>
+                            <td style="color: #94a3b8;">#{{ order.id }}</td>
+                            <td style="font-weight: 500; font-size: 1.05rem;">{{ order.product_name }}</td>
+                            <td>
+                                <span
+                                    class="status-badge {% if order.status == 'Delivered' %}completed{% elif order.status == 'Returned' %}pending{% elif order.status == 'Return Requested' %}pending{% elif order.status == 'Return Rejected' %}rejected{% endif %}">
+                                    {{ order.status }}
+                                </span>
+                            </td>
+                            <td style="color: #94a3b8;">{{ order.purchase_date|date:"M d, Y" }}</td>
+                            <td style="text-align: center;">
+                                <a href="{% url 'update_order' order.id %}" class="action-link-small"
+                                    style="padding: 0.5rem 1rem; border-radius: 8px; background: rgba(59, 130, 246, 0.1); color: #60a5fa; text-decoration: none; font-weight: 600;">Update</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="empty-state"
+                style="text-align: center; padding: 4rem; background: var(--glass); border-radius: 20px; margin-top: 2rem;">
+                <p style="color: #94a3b8; font-size: 1.1rem;">No orders found to update.</p>
+            </div>
+            {% endif %}
+        </main>
+    </div>
+</body>
+
+</html>

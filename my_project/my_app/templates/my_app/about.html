@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Return-Ease</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'my_app/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="dashboard-page">
+    <header class="dashboard-header">
+        <div class="logo"><a href="{% url 'home' %}" style="text-decoration: none;">Return-Ease</a></div>
+        <nav class="dashboard-nav">
+            <a href="{% url 'dashboard' %}"
+                class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">Dashboard</a>
+            <a href="{% url 'about' %}"
+                class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a>
+            <a href="{% url 'help' %}"
+                class="{% if request.resolver_match.url_name == 'help' %}active{% endif %}">Help</a>
+            <a href="{% url 'profile' %}"
+                class="{% if request.resolver_match.url_name == 'profile' %}active{% endif %}">Profile</a>
+            <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+        </nav>
+    </header>
+
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-buttons-group">
+                <span
+                    style="font-size: 0.75rem; text-transform: uppercase; color: #94a3b8; letter-spacing: 0.1em; margin-bottom: 0.5rem; font-weight: 600; padding-left: 1rem;">Actions</span>
+                <a href="{% url 'products' %}" class="action-link">
+                    <span style="margin-right: 12px;">🛍️</span> View Products
+                </a>
+                <a href="{% url 'view_orders' %}" class="action-link">
+                    <span style="margin-right: 12px;">🔄</span> Update
+                </a>
+                <a href="{% url 'view_orders' %}" class="action-link">
+                    <span style="margin-right: 12px;">�️</span> Delete
+                </a>
+            </div>
+        </aside>
+
+        <main class="dashboard-main-content">
+            <section class="info-section">
+                <h1>About Return-Ease</h1>
+                <p>Return-Ease is your ultimate companion in managing the complex world of product refunds and returns.
+                </p>
+
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>Our Mission</h3>
+                        <p>To provide a seamless, transparent, and efficient way for users to track their money and
+                            ensure
+                            they get what they're owed.</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Our Vision</h3>
+                        <p>Automating the refund ecosystem so that no consumer ever loses money due to a forgotten or
+                            stuck
+                            return.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "C:\Users\ELCOT\Desktop\project\my_project\debug_import.py", line 7, in <module>
+    import django
+ModuleNotFoundError: No module named 'django'

@@ -1,0 +1,50 @@
+py : Traceback (most recent 
+call last):
+At line:1 char:1
++ py -3 manage.py migrate 
+2>&1 | Out-File -FilePath 
+mig_msg.txt -Encodi ...
++ 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo           
+   : NotSpecified: (Traceba  
+  ck (most recent call las   
+ t)::String) [], RemoteEx    
+ception
+    + FullyQualifiedErrorId  
+   : NativeCommandError
+ 
+  File "C:\Users\ELCOT\Deskto
+p\project\my_project\manage.p
+y", line 11, in main
+    from 
+django.core.management 
+import 
+execute_from_command_line
+ModuleNotFoundError: No 
+module named 'django'
+
+The above exception was the 
+direct cause of the 
+following exception:
+
+Traceback (most recent call 
+last):
+  File "C:\Users\ELCOT\Deskto
+p\project\my_project\manage.p
+y", line 22, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\ELCOT\Deskto
+p\project\my_project\manage.p
+y", line 13, in main
+    raise ImportError(
+    ...<3 lines>...
+    ) from exc
+ImportError: Couldn't import 
+Django. Are you sure it's 
+installed and available on 
+your PYTHONPATH environment 
+variable? Did you forget to 
+activate a virtual 
+environment?

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Return-Ease Refund Manager</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'my_app/style.css' %}" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <div class="logo">Return-Ease</div>
+    <nav>
+      <a href="{% url 'login' %}" class="nav-btn">Login</a>
+      <a href="{% url 'signup' %}" class="nav-btn primary">Sign Up</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="hero">
+      <h1>Return-Ease Refund Manager</h1>
+      <p>The smartest way to manage your refunds efficiently.</p>
+      <a href="{% url 'products' %}" class="product-btn">View Products</a>
+    </div>
+
+    <section class="description-grid">
+      <div class="description-card">
+        <div class="card-icon">⚡</div>
+        <h3>Fast Processing</h3>
+        <p>Speed up your refund requests with our optimized and streamlined workflow.</p>
+      </div>
+      <div class="description-card">
+        <div class="card-icon">📊</div>
+        <h3>Smart Insights</h3>
+        <p>Get detailed analytics and track your refund status effortlessly in real-time.</p>
+      </div>
+      <div class="description-card">
+        <div class="card-icon">🔒</div>
+        <h3>Secure Storage</h3>
+        <p>Your data is stored with top-tier security and privacy-first architecture.</p>
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>

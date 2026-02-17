@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Orders - Return-Ease</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'my_app/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="dashboard-page">
+    <header class="dashboard-header">
+        <div class="logo">Return-Ease</div>
+        <nav class="dashboard-nav">
+            <a href="{% url 'dashboard' %}"
+                class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">Dashboard</a>
+            <a href="{% url 'about' %}"
+                class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a>
+            <a href="{% url 'help' %}"
+                class="{% if request.resolver_match.url_name == 'help' %}active{% endif %}">Help</a>
+            <a href="{% url 'profile' %}"
+                class="{% if request.resolver_match.url_name == 'profile' %}active{% endif %}">Profile</a>
+            <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+        </nav>
+    </header>
+
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-buttons-group">
+                <span
+                    style="font-size: 0.75rem; text-transform: uppercase; color: #94a3b8; letter-spacing: 0.1em; margin-bottom: 0.5rem; font-weight: 600; padding-left: 1rem;">Actions</span>
+                <a href="{% url 'products' %}" class="action-link">
+                    <span style="margin-right: 12px;">🛍️</span> View Products
+                </a>
+                <a href="{% url 'view_orders' %}" class="action-link active">
+                    <span style="margin-right: 12px;">📦</span> View Orders
+                </a>
+                <a href="{% url 'update_orders' %}" class="action-link">
+                    <span style="margin-right: 12px;">🔄</span> Update
+                </a>
+                <a href="{% url 'refund_orders' %}" class="action-link">
+                    <span style="margin-right: 12px;">🗑️</span> Refund
+                </a>
+            </div>
+        </aside>
+
+        <main class="dashboard-main-content">
+            <section class="welcome-section">
+                <h1>Your Order History</h1>
+                <p>Track and manage your recent purchases and refund eligibility.</p>
+            </section>
+
+            {% if orders %}
+            <div class="orders-table-container">
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>Product ID</th>
+                            <th>Product Name</th>
+                            <th>Price</th>
+                            <th>Purchase Date</th>
+                            <th>Return Deadline</th>
+                            <th>Return Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                        <tr>
+                            <td>#{{ order.product_id }}</td>
+                            <td style="font-weight: 500;">{{ order.product_name }}</td>
+                            <td style="color: #10b981; font-weight: 600;">${{ order.product_price }}</td>
+                            <td>{{ order.purchase_date|date:"M d, Y" }}</td>
+                            <td>{{ order.return_deadline|date:"M d, Y" }}</td>
+                            <td>
+                                <span
+                                    class="status-badge {% if order.status == 'Delivered' %}completed{% elif order.status == 'Return Requested' %}pending{% elif order.status == 'Return Rejected' %}rejected{% endif %}">
+                                    {{ order.status }}
+                                </span>
+                            </td>
+                            <td style="display: flex; gap: 0.5rem; justify-content: center;">
+                                <a href="{% url 'update_order' order.id %}" class="action-link-small"
+                                    style="padding: 0.4rem 0.8rem; border-radius: 6px; background: rgba(59, 130, 246, 0.1); color: #60a5fa;">Update</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="empty-orders-state"
+                style="text-align: center; padding: 5rem; background: var(--glass); border-radius: 24px; border: 1px solid var(--glass-border);">
+                <div style="font-size: 4rem; margin-bottom: 1.5rem;">📦</div>
+                <h2 style="margin-bottom: 1rem;">No orders yet</h2>
+                <p style="margin-bottom: 2rem;">You haven't made any purchases yet. Start shopping to see your orders
+                    here!</p>
+                <a href="{% url 'products' %}" class="product-btn" style="text-decoration: none;">Browse Products</a>
+            </div>
+            {% endif %}
+        </main>
+    </div>
+</body>
+
+</html>
