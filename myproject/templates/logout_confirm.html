@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Logout Confirmation - Return-Ease{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 450px; text-align: center;">
+    <div style="color: var(--danger); margin-bottom: 1.5rem;">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+    </div>
+
+    <h2 class="card-title">Are you sure?</h2>
+    <p class="card-subtitle">You are about to log out of the system.</p>
+
+    <form method="post" style="display: flex; gap: 1rem; margin-top: 2rem;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary" style="flex: 1; background: var(--danger);">Yes, Logout</button>
+        <a href="{% url 'dashboard' %}" class="btn btn-outline" style="flex: 1;">Cancel</a>
+    </form>
+</div>
+{% endblock %}

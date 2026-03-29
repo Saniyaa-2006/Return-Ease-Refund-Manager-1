@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Sign Up - Return-Ease{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2 class="card-title">Create an Account</h2>
+    <p class="card-subtitle">Get started with Return-Ease today</p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% for field in form %}
+        <div class="form-group">
+            <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field.errors }}
+            <input class="form-control" type="{{ field.field.widget.input_type|default:'text' }}"
+                name="{{ field.name }}" id="{{ field.id_for_label }}" {% if field.field.required %}required{% endif %}
+                {% if field.value %}value="{{ field.value }}" {% endif %}>
+        </div>
+        {% endfor %}
+
+        <div style="margin-top: 2rem;">
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Sign Up</button>
+        </div>
+    </form>
+
+    <div style="text-align: center; margin-top: 2rem; font-size: 0.95rem;">
+        <p style="color: var(--text-muted);">Already have an account? <a href="{% url 'login' %}"
+                style="color: var(--primary); text-decoration: none; font-weight: 600;">Log In</a></p>
+    </div>
+</div>
+{% endblock %}

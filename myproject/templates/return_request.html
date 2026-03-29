@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Return Request - Return-Ease{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 600px;">
+    <h2 class="card-title" style="text-align: left;">File Return Request</h2>
+    <p class="card-subtitle" style="text-align: left;">Please provide the bill number to process the return</p>
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label class="form-label" for="bill_number">Bill Number</label>
+            <input class="form-control" type="text" name="bill_number" id="bill_number" required
+                placeholder="Enter bill number" value="{{ bill_number }}">
+        </div>
+
+        {% for field in r_form %}
+        <div class="form-group">
+            <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+
+            {% if field.html_name == 'reason' %}
+            <textarea class="form-control" name="{{ field.html_name }}" id="{{ field.id_for_label }}" rows="4" required
+                placeholder="Provide reason..."></textarea>
+            {% elif field.html_name == 'bill_image' %}
+            <input class="form-control" type="file" name="{{ field.html_name }}" id="{{ field.id_for_label }}">
+            {% else %}
+            <input class="form-control" type="date" name="{{ field.html_name }}" id="{{ field.id_for_label }}" required>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <div style="margin-top: 2rem;">
+            <button type="submit" class="btn btn-primary" style="padding: 1rem 2rem; width: 100%;">Submit Return
+                Request</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

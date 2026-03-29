@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Customer Records - Return-Ease{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h2>Customer Database</h2>
+    <span style="color: var(--text-muted);">Manage customer purchase and return behaviors.</span>
+</div>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Customer Name</th>
+                <th>Phone Number</th>
+                <th>Total Purchases</th>
+                <th>Total Returns</th>
+                <th>Retention Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in customers %}
+            <tr>
+                <td style="font-weight: 500;">{{ customer.name }}</td>
+                <td>{{ customer.phone }}</td>
+                <td style="color: var(--primary); font-weight: 600;">{{ customer.total_purchases }}</td>
+                <td style="color: var(--danger); font-weight: 600;">{{ customer.total_returns }}</td>
+                <td>
+                    {% if customer.total_returns > 0 and customer.total_purchases > 0 %}
+                    {% widthratio customer.total_returns customer.total_purchases 100 as return_rate %}
+                    {% if return_rate|add:0 > 50 %}
+                    <span class="badge badge-rejected">High Returner</span>
+                    {% else %}
+                    <span class="badge badge-pending">Average</span>
+                    {% endif %}
+                    {% else %}
+                    <span class="badge badge-completed">Excellent</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 3rem;">No customers found.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

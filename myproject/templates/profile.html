@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+
+{% block title %}Manager Profile - Return-Ease{% endblock %}
+
+{% block content %}
+
+<div style="max-width: 900px; margin: 0 auto; animation: fadeIn 0.5s ease-out;">
+    <div style="margin-bottom: 2.5rem; display: flex; align-items: center; gap: 1rem;">
+        <div
+            style="width: 64px; height: 64px; background: linear-gradient(135deg, var(--primary), #8b5cf6); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: white; font-weight: 700;">
+            {{ user.username|first|upper }}
+        </div>
+        <div>
+            <h1 style="font-size: 1.8rem; font-weight: 700;">Manager Profile</h1>
+            <p style="color: var(--text-muted);">View and manage your account details</p>
+        </div>
+    </div>
+
+```
+<div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 2rem;">
+
+    <!-- INFO SECTION -->
+    <div style="display: flex; flex-direction: column; gap: 2rem;">
+
+        <div class="card" style="max-width: 100%; margin: 0; padding: 2rem;">
+            <h3 style="font-size: 1.2rem; margin-bottom: 1.5rem;">Manager Details</h3>
+
+            <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+                <div>
+                    <label style="font-size: 0.8rem; color: var(--text-muted);">Username</label>
+                    <p style="font-weight: 600; font-size: 1.1rem;">{{ user.username }}</p>
+                </div>
+
+                <div>
+                    <label style="font-size: 0.8rem; color: var(--text-muted);">Full Name</label>
+                    <p style="font-weight: 600; font-size: 1.1rem;">
+                        {{ user.get_full_name|default:"Not Provided" }}
+                    </p>
+                </div>
+
+                <div>
+                    <label style="font-size: 0.8rem; color: var(--text-muted);">Email</label>
+                    <p style="font-weight: 600; font-size: 1.1rem;">
+                        {{ user.email|default:"Not Provided" }}
+                    </p>
+                </div>
+
+                <div>
+                    <label style="font-size: 0.8rem; color: var(--text-muted);">Role</label>
+                    <div>
+                        {% if user.is_superuser %}
+                            <span class="badge badge-approved">Super Administrator</span>
+                        {% elif user.is_staff %}
+                            <span class="badge badge-pending">System Staff</span>
+                        {% else %}
+                            <span class="badge badge-rejected">Standard User</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div>
+                    <label style="font-size: 0.8rem; color: var(--text-muted);">Joined Date</label>
+                    <p>{{ user.date_joined|date:"F d, Y" }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card"
+            style="max-width: 100%; margin: 0; padding: 1.5rem; background: rgba(239, 68, 68, 0.05);">
+            <h3 style="font-size: 1rem; color: #f87171;">Danger Zone</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">
+                Once you logout, you must login again to access dashboard.
+            </p>
+            <a href="{% url 'logout' %}" class="btn"
+                style="background: rgba(239,68,68,0.1); color:#ef4444; width:100%;">
+                Sign Out
+            </a>
+        </div>
+
+    </div>
+
+
+    <!-- FORM SECTION -->
+    <div style="display: flex; flex-direction: column; gap: 2rem;">
+
+        <!-- Update Profile -->
+        <div class="card" style="max-width: 100%; margin: 0;">
+            <h3 style="font-size: 1.2rem; margin-bottom: 1.5rem;">Update Profile</h3>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                {% for field in u_form %}
+                <div class="form-group">
+                    <label class="form-label" for="{{ field.id_for_label }}">
+                        {{ field.label }}
+                    </label>
+
+                    {{ field.errors }}
+
+                    <input
+                        type="{{ field.field.widget.input_type|default:'text' }}"
+                        name="{{ field.name }}"
+                        id="{{ field.id_for_label }}"
+                        value="{{ field.value|default:'' }}"
+                        class="form-control"
+                        {% if field.field.required %}required{% endif %}
+                    >
+
+                    {% if field.help_text %}
+                    <p class="form-text">{{ field.help_text|safe }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <button type="submit" name="update_profile" class="btn btn-primary" style="width:100%;">
+                    Save Changes
+                </button>
+            </form>
+        </div>
+
+
+        <!-- Password Change -->
+        <div class="card" style="max-width: 100%; margin: 0;">
+            <h3 style="font-size: 1.2rem; margin-bottom: 1.5rem;">Security Settings</h3>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                {% for field in p_form %}
+                <div class="form-group">
+                    <label class="form-label" for="{{ field.id_for_label }}">
+                        {{ field.label }}
+                    </label>
+
+                    {{ field.errors }}
+
+                    <input
+                        type="password"
+                        name="{{ field.name }}"
+                        id="{{ field.id_for_label }}"
+                        class="form-control"
+                        placeholder="Enter {{ field.label|lower }}"
+                        {% if field.field.required %}required{% endif %}
+                    >
+
+                    {% if field.help_text %}
+                    <p class="form-text" style="font-size:0.75rem;">
+                        {{ field.help_text|safe }}
+                    </p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <button type="submit" name="change_password" class="btn btn-outline" style="width:100%;">
+                    Update Password
+                </button>
+            </form>
+        </div>
+
+    </div>
+</div>
+```
+
+</div>
+
+{% endblock %}

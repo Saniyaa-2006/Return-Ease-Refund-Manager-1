@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Finances & Reports - Return-Ease{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h2>Financial Reports</h2>
+    <span
+        style="background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 0.5rem 1rem; border-radius: 8px; font-weight: 600; font-size: 1.2rem;">
+        Total Lifetime Refunds: ${{ total_refund|floatformat:2 }}
+    </span>
+</div>
+
+<div class="card" style="max-width: none; margin-bottom: 2rem; padding: 2rem;">
+    <h3
+        style="color: var(--text-main); margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
+        Monthly Refund Volume (Current Year)
+    </h3>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+        {% for report in monthly_refunds %}
+        <div
+            style="background: rgba(15,23,42,0.4); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-color); display: flex; flex-direction: column; align-items: center;">
+            <div
+                style="color: var(--text-muted); font-weight: 500; margin-bottom: 0.5rem; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em;">
+                Month {{ report.return_date__month }}
+            </div>
+            <div style="color: var(--primary); font-size: 1.8rem; font-weight: 700;">
+                ${{ report.total|floatformat:2 }}
+            </div>
+        </div>
+        {% empty %}
+        <div
+            style="grid-column: 1 / -1; padding: 3rem; text-align: center; color: var(--text-muted); background: rgba(15,23,42,0.2); border-radius: 12px;">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 1rem; opacity: 0.5;">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <p>No completed refunds recorded this year to generate reports.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Refund History - Return-Ease{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h2>Completed Refunds History</h2>
+    <span
+        style="color: var(--text-muted); background: rgba(15,23,42,0.4); padding: 0.5rem 1rem; border-radius: 8px;">Total
+        items: {{ refunds|length }}</span>
+</div>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Customer Name</th>
+                <th>Product</th>
+                <th>Amount Refunded</th>
+                <th>Refund Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for refund in refunds %}
+            <tr>
+                <td style="font-weight: 500;">{{ refund.purchase.customer.name }}</td>
+                <td>{{ refund.purchase.product_name }}</td>
+                <td style="color: var(--success); font-weight: 600;">${{ refund.refund_amount }}</td>
+                <td>{{ refund.return_date }}</td>
+                <td>
+                    <span class="badge badge-completed">Completed</span>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 3rem;">No completed
+                    refunds found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Return-Ease{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h2>Dashboard Overview</h2>
+    <a href="{% url 'add_purchase' %}" class="btn btn-primary">+ New Purchase</a>
+</div>
+
+<div class="dashboard-grid">
+    <div class="card" style="margin: 0; max-width: none; padding: 1.5rem;">
+        <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 0.5rem;">Total Purchases</h3>
+        <p style="font-size: 2.5rem; font-weight: 700; color: var(--text-main);">{{ total_purchases }}</p>
+    </div>
+
+    <div class="card" style="margin: 0; max-width: none; padding: 1.5rem;">
+        <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 0.5rem;">Total Return Requests</h3>
+        <p style="font-size: 2.5rem; font-weight: 700; color: var(--text-main);">{{ total_returns }}</p>
+    </div>
+
+    <div class="card" style="margin: 0; max-width: none; padding: 1.5rem;">
+        <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 0.5rem;">Active Refunds</h3>
+        <p style="font-size: 2.5rem; font-weight: 700; color: var(--primary);">{{ active_refunds }}</p>
+    </div>
+
+    <div class="card" style="margin: 0; max-width: none; padding: 1.5rem;">
+        <h3 style="color: var(--text-muted); font-size: 1rem; margin-bottom: 0.5rem;">Completed Refunds</h3>
+        <p style="font-size: 2.5rem; font-weight: 700; color: var(--success);">{{ completed_refunds }}</p>
+    </div>
+</div>
+
+<h3 style="margin-bottom: 1rem;">Recent Refund Requests</h3>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Customer</th>
+                <th>Product</th>
+                <th>Return Date</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in recent_requests %}
+            <tr>
+                <td>{{ request.purchase.customer.name }}</td>
+                <td>{{ request.purchase.product_name }}</td>
+                <td>{{ request.return_date }}</td>
+                <td>
+                    <span class="badge badge-{{ request.status|lower }}">{{ request.status }}</span>
+                </td>
+                <td>
+                    <a href="{% url 'refund_management' %}"
+                        style="color: var(--primary); text-decoration: none; font-weight: 500;">Manage &rarr;</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" style="text-align: center; color: var(--text-muted);">No recent returns found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

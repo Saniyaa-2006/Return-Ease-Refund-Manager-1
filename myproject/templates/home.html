@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome - Return-Ease{% endblock %}
+
+{% block content %}
+<div style="text-align: center; margin-top: 4rem;">
+    <h1 style="font-size: 3.5rem; font-weight: 700; margin-bottom: 1.5rem; color: #fff;">
+        Simplify Returns with <span style="color: var(--primary);">Return-Ease</span>
+    </h1>
+    <p style="font-size: 1.25rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 3rem; line-height: 1.6;">
+        The all-in-one platform to handle product returns seamlessly. Simplify your workflow, keep customers happy, and
+        track every refund in one place.
+    </p>
+
+    <div style="display: flex; gap: 1rem; justify-content: center;">
+        <a href="{% url 'signup' %}" class="btn btn-primary" style="font-size: 1.1rem; padding: 1rem 2.5rem;">Get
+            Started Now</a>
+        <a href="{% url 'login' %}" class="btn btn-outline" style="font-size: 1.1rem; padding: 1rem 2.5rem;">Access
+            Dashboard</a>
+    </div>
+
+    <!-- Quick Features Section -->
+    <div style="display: flex; gap: 2rem; justify-content: center; margin-top: 5rem; flex-wrap: wrap;">
+        <div class="card"
+            style="margin: 0; max-width: 300px; background: rgba(30, 41, 59, 0.5); backdrop-filter: blur(10px);">
+            <div style="color: var(--success); margin-bottom: 1rem;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+            </div>
+            <h3 style="margin-bottom: 0.5rem; font-size: 1.2rem;">Speedy Approvals</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Approve and process returns with one click. Save
+                time for your team and your customers.</p>
+        </div>
+        <div class="card"
+            style="margin: 0; max-width: 300px; background: rgba(30, 41, 59, 0.5); backdrop-filter: blur(10px);">
+            <div style="color: var(--primary); margin-bottom: 1rem;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="20" x2="12" y2="10"></line>
+                    <line x1="18" y1="20" x2="18" y2="4"></line>
+                    <line x1="6" y1="20" x2="6" y2="16"></line>
+                </svg>
+            </div>
+            <h3 style="margin-bottom: 0.5rem; font-size: 1.2rem;">Detailed Analytics</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Monitor return trends and refund volumes to make
+                data-driven decisions.</p>
+        </div>
+        <div class="card"
+            style="margin: 0; max-width: 300px; background: rgba(30, 41, 59, 0.5); backdrop-filter: blur(10px);">
+            <div style="color: #f59e0b; margin-bottom: 1rem;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+            </div>
+            <h3 style="margin-bottom: 0.5rem; font-size: 1.2rem;">Customer Management</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Keep track of customer histories to identify loyal
+                buyers vs frequent returners.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

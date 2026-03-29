@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Refund Management - Return-Ease{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h2>Active Refund Management</h2>
+    <span style="color: var(--text-muted);">Process pending and approved refunds.</span>
+</div>
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Customer</th>
+                <th>Product</th>
+                <th>Return Date</th>
+                <th>Refund Amount</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for refund in refunds %}
+            <tr>
+                <td>{{ refund.purchase.customer.name }}</td>
+                <td>{{ refund.purchase.product_name }}</td>
+                <td>{{ refund.return_date }}</td>
+                <td>${{ refund.refund_amount }}</td>
+                <td>
+                    <span class="badge badge-{{ refund.status|lower }}">{{ refund.status }}</span>
+                </td>
+                <td>
+                    <div style="display: flex; gap: 0.5rem;">
+                        {% if refund.status == 'Pending' %}
+                        <a href="{% url 'update_refund_status' refund.id 'Approved' %}" class="btn btn-outline"
+                            style="border-color: #3b82f6; color: #3b82f6; padding: 0.3rem 0.6rem; font-size: 0.8rem;">Approve</a>
+                        <a href="{% url 'update_refund_status' refund.id 'Rejected' %}" class="btn btn-outline"
+                            style="border-color: var(--danger); color: var(--danger); padding: 0.3rem 0.6rem; font-size: 0.8rem;">Reject</a>
+                        {% elif refund.status == 'Approved' %}
+                        <a href="{% url 'update_refund_status' refund.id 'Completed' %}" class="btn btn-outline"
+                            style="border-color: var(--success); color: var(--success); padding: 0.3rem 0.6rem; font-size: 0.8rem;">Complete</a>
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 3rem;">No active refunds
+                    to manage at this time.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Help & Support - Return-Ease{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 800px;">
+    <h1 class="card-title" style="text-align: left;">Help & Support</h1>
+    <p class="card-subtitle" style="text-align: left;">Frequently Asked Questions and Guide</p>
+
+    <div style="display: flex; flex-direction: column; gap: 1.5rem; margin-top: 1.5rem;">
+        <div>
+            <h3 style="color: var(--primary); margin-bottom: 0.5rem;">How do I record a new purchase?</h3>
+            <p style="color: var(--text-muted);">Go to the "New Purchase" section from your sidebar. Fill in the
+                customer name, phone number, product name, ID, and bill number. Click "Save" to register the purchase.
+            </p>
+        </div>
+
+        <div>
+            <h3 style="color: var(--primary); margin-bottom: 0.5rem;">How do I process a return?</h3>
+            <p style="color: var(--text-muted);">Navigate to "Return Request". Enter the bill number provided by the
+                customer. If the purchase is found, fill in the return date and reason, then submit the request.</p>
+        </div>
+
+        <div>
+            <h3 style="color: var(--primary); margin-bottom: 0.5rem;">What are the refund statuses?</h3>
+            <p style="color: var(--text-muted);">
+                <strong>Pending:</strong> Request is recorded and waiting for review.<br>
+                <strong>Approved:</strong> Manager has approved the refund, payment processing initiated.<br>
+                <strong>Rejected:</strong> Refund request was declined.<br>
+                <strong>Completed:</strong> Refund has been fully processed and money returned.
+            </p>
+        </div>
+
+        <div style="margin-top: 1rem; padding: 1rem; background: rgba(99, 102, 241, 0.1); border-radius: 8px;">
+            <p style="color: var(--text-main); font-weight: 500;">Need further assistance? Contact our technical support
+                at support@return-ease.com</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

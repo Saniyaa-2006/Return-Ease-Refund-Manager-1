@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}View Purchases - Return-Ease{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h2>Purchase Records</h2>
+    <span
+        style="color: var(--text-muted); background: rgba(15,23,42,0.4); padding: 0.5rem 1rem; border-radius: 8px;">Total
+        Items: {{ purchases|length }}</span>
+</div>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Bill Number</th>
+                <th>Customer Name</th>
+                <th>Product</th>
+                <th>Product ID</th>
+                <th>Purchase Date</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for purchase in purchases %}
+            <tr>
+                <td style="font-weight: 600; color: var(--text-muted);">{{ purchase.bill_number }}</td>
+                <td style="font-weight: 500;">{{ purchase.customer.name }}</td>
+                <td>{{ purchase.product_name }}</td>
+                <td style="color: var(--text-muted); font-size: 0.9em;">#{{ purchase.product_id }}</td>
+                <td>{{ purchase.purchase_date }}</td>
+                <td style="color: var(--success); font-weight: 600;">${{ purchase.price }}</td>
+                <td>
+                    {% if purchase.returnrequest_set.all %}
+                    <span class="badge badge-completed" style="padding: 0.5rem 1rem; font-size: 0.85rem; display: inline-block;">Returned</span>
+                    {% else %}
+                    <a href="{% url 'return_request' %}?bill_number={{ purchase.bill_number }}" class="btn btn-warning"
+                        style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">Return</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 3rem;">No purchases found in the database.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

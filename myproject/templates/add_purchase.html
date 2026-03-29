@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Add Purchase - Return-Ease{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 800px;">
+    <h2 class="card-title" style="text-align: left;">Record New Purchase</h2>
+    <p class="card-subtitle" style="text-align: left;">Enter customer and product details to register a purchase.</p>
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <form method="post" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+        {% csrf_token %}
+
+        <!-- Customer Info -->
+        <div>
+            <h3 style="margin-bottom: 1rem; font-size: 1.2rem; color: var(--primary);">Customer Details</h3>
+            {% for field in c_form %}
+            <div class="form-group">
+                <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                <input class="form-control" type="text" name="{{ field.html_name }}" id="{{ field.id_for_label }}"
+                    required>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Product Info -->
+        <div>
+            <h3 style="margin-bottom: 1rem; font-size: 1.2rem; color: var(--primary);">Product Details</h3>
+            {% for field in p_form %}
+            <div class="form-group">
+                <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+
+                {% if field.field.widget.input_type == 'date' %}
+                <input class="form-control" type="date" name="{{ field.html_name }}" id="{{ field.id_for_label }}"
+                    required>
+                {% else %}
+                <input class="form-control" type="text" name="{{ field.html_name }}" id="{{ field.id_for_label }}"
+                    required>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <div style="grid-column: 1 / -1; margin-top: 1rem;">
+            <button type="submit" class="btn btn-primary" style="padding: 1rem 2rem; width: auto;">Save Purchase
+                Record</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
